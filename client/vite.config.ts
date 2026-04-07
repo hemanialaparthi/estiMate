@@ -6,10 +6,16 @@ export default defineConfig({
     build: {
         rollupOptions: {
             output: {
-                manualChunks: {
-                    'vendor': ['react', 'react-dom', 'react-router-dom', 'axios'],
-                    'charts': ['recharts'],
-                    'pages': ['./src/pages/Landing', './src/pages/Auth', './src/pages/Dashboard', './src/pages/Projects', './src/pages/Estimate', './src/pages/TaskBoard', './src/pages/Insights', './src/pages/Settings'],
+                manualChunks: (id) => {
+                    if (id.includes('node_modules/react') || id.includes('node_modules/react-dom') || id.includes('node_modules/react-router-dom') || id.includes('node_modules/axios')) {
+                        return 'vendor';
+                    }
+                    if (id.includes('node_modules/recharts')) {
+                        return 'charts';
+                    }
+                    if (id.includes('src/pages')) {
+                        return 'pages';
+                    }
                 }
             }
         },
@@ -19,7 +25,7 @@ export default defineConfig({
         port: 5173,
         proxy: {
             '/api': {
-                target: 'https://estimate-yjne.onrender.com',
+                target: 'http://localhost:4000',
                 changeOrigin: true,
             },
         },

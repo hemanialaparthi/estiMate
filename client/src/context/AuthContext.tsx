@@ -57,12 +57,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     const login = async (email: string, password: string) => {
-        const res = await axios.post('/api/auth/login', { email, password });
+        const apiURL = import.meta.env.VITE_API_URL || '';
+        const res = await axios.post(`${apiURL}/api/auth/login`, { email, password });
         saveAuth(res.data.token, res.data.user);
     };
 
     const register = async (email: string, password: string) => {
-        const res = await axios.post('/api/auth/register', { email, password });
+        const apiURL = import.meta.env.VITE_API_URL || '';
+        const res = await axios.post(`${apiURL}/api/auth/register`, { email, password });
         saveAuth(res.data.token, res.data.user);
     };
 
