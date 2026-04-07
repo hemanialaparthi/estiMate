@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useRef } from 'react';
 
+// Uncomment if needed for future sections
+/*
 const features = [
     {
         icon: '◈',
@@ -18,6 +20,7 @@ const features = [
         desc: "Tap into 1,800+ real projects from other engineering teams. Better accuracy, wider confidence ranges.",
     },
 ];
+*/
 
 const coreFeatures = [
     {
@@ -62,6 +65,8 @@ const coreFeatures = [
     },
 ];
 
+// Uncomment if needed for future sections
+/*
 const benefits = [
     { icon: '⏰', title: 'Save 20+ hours', desc: 'Auto-generates tasks instead of manual planning' },
     { icon: '✅', title: '60% More Accurate', desc: 'Data-driven estimates beat manual guessing' },
@@ -70,6 +75,7 @@ const benefits = [
     { icon: '💰', title: 'Reduce Overruns', desc: 'Catch timeline risks before they happen' },
     { icon: '🎓', title: 'Team Learning', desc: 'Understand patterns in project execution' },
 ];
+*/
 
 const faqs = [
     {

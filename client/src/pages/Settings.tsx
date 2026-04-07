@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 
 export default function Settings() {
-    const { user, logout, isPremium, refreshUser } = useAuth();
+    const { isPremium, refreshUser } = useAuth();
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState({ text: '', type: '' });
 

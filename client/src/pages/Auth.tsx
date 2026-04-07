@@ -121,7 +121,7 @@ export default function Auth() {
                         {(['login', 'register'] as const).map((t) => (
                             <button
                                 key={t}
-                                onClick={() => { setTab(t); setError(''); }}
+                                onClick={() => setTab(t)}
                                 style={{
                                     flex: 1, padding: '10px', background: 'none', border: 'none',
                                     color: tab === t ? 'var(--purple-400)' : 'var(--text-muted)',
@@ -198,7 +198,7 @@ export default function Auth() {
                     <p style={{ marginTop: 20, textAlign: 'center', fontSize: '0.82rem', color: 'var(--text-muted)' }}>
                         {tab === 'login' ? "Don't have an account? " : "Already have an account? "}
                         <button
-                            onClick={() => { setTab(tab === 'login' ? 'register' : 'login'); setError(''); }}
+                            onClick={() => setTab(tab === 'login' ? 'register' : 'login')}
                             style={{ background: 'none', border: 'none', color: 'var(--purple-400)', cursor: 'pointer', fontFamily: 'var(--font)', fontSize: '0.82rem' }}
                         >
                             {tab === 'login' ? 'Sign up free' : 'Sign in'}

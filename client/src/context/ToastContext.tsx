@@ -44,17 +44,19 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     const addToast = useCallback(
         (toast: Omit<Toast, 'id' | 'isExiting'>) => {
             const id = Date.now().toString();
+            const duration = toast.duration ?? 3000;
             const newToast: Toast = {
                 ...toast,
                 id,
-                duration: toast.duration ?? 3000,
+                duration,
+                isExiting: false,
             };
 
             setToasts((prev) => [...prev, newToast]);
 
             // Auto-dismiss after duration
-            if (newToast.duration > 0) {
-                setTimeout(() => removeToast(id), newToast.duration);
+            if (duration > 0) {
+                setTimeout(() => removeToast(id), duration);
             }
 
             return id;

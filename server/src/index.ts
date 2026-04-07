@@ -18,7 +18,7 @@ const PORT = parseInt(process.env.PORT || '4000', 10);
 
 // Middleware
 app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175', 'http://localhost:5176', 'http://localhost:5177', 'http://localhost:3000', 'http://localhost:3001'],
+    origin: ['https://estimate-yjne.onrender.com'],
     credentials: true,
 }));
 app.use(express.json({ limit: '50mb' }));

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { useNavigate } from 'react-router-dom';
-import { SkeletonStats, EmptyState } from '../components/LoadingStates';
+import { SkeletonStats } from '../components/LoadingStates';
 
 interface Stats {
     total: number;
@@ -24,7 +24,6 @@ export default function Dashboard() {
     const [stats, setStats] = useState<Stats | null>(null);
     const [history, setHistory] = useState<HistoryItem[]>([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
 
     useEffect(() => {
         const loadData = async () => {
@@ -39,10 +38,8 @@ export default function Dashboard() {
                     limit: projectsRes.data?.limit ?? 10 
                 });
                 setHistory(historyRes.data || []);
-                setError(false);
             } catch (err) {
                 console.error('Failed to load dashboard:', err);
-                setError(true);
                 addToast({
                     type: 'error',
                     title: 'Failed to load dashboard',

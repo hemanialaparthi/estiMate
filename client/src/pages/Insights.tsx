@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Cell } from 'recharts';
+import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Cell } from 'recharts';
 
 export default function Insights() {
     const { isPremium } = useAuth();
@@ -90,7 +90,7 @@ export default function Insights() {
                                     contentStyle={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 8 }}
                                 />
                                 <Bar dataKey="avg_days" radius={[4, 4, 0, 0]}>
-                                    {data?.avgByType?.map((entry: any, index: number) => (
+                                    {data?.avgByType?.map((_entry: any, index: number) => (
                                         <Cell key={index} fill={['#8b5cf6', '#6366f1', '#a78bfa', '#818cf8', '#4f46e5'][index % 5]} />
                                     ))}
                                 </Bar>

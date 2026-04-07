@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useAuth } from '../context/AuthContext';
 
 interface Task {
     id: number;
@@ -30,7 +29,7 @@ interface Board {
 }
 
 export default function TaskBoard() {
-    const { isPremium } = useAuth();
+    // const { } = useAuth();
     const [projects, setProjects] = useState<Project[]>([]);
     const [loading, setLoading] = useState(true);
     const [board, setBoard] = useState<Board | null>(null);
