@@ -18,6 +18,7 @@ const PORT = parseInt(process.env.PORT || '4000', 10);
 
 // Middleware
 const allowedOrigins = [
+    'https://esti-mate-client.vercel.app',
     'https://estimate-yjne.onrender.com',
     'http://localhost:5173',
     'http://localhost:3000',
