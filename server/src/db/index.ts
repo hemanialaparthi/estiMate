@@ -5,23 +5,39 @@ import fs from 'fs';
 // @ts-ignore
 import { createRequire } from 'module';
 // @ts-ignore
+import { fileURLToPath } from 'url';
+// @ts-ignore
 import pkg from 'pg';
 const { Client } = pkg;
 const require = createRequire(import.meta.url);
+
+// Get environment variables safely without direct process reference
+const getEnv = (key: string): string | undefined => {
+    try {
+        return (globalThis as any).process?.env?.[key];
+    } catch {
+        return undefined;
+    }
+};
+
+const getDatabaseUrl = (): string | undefined => getEnv('DATABASE_URL');
 
 let db: any;
 let isPostgres = false;
 
 // Detect if we should use PostgreSQL or SQLite
-const isDev = !process.env.DATABASE_URL;
+const isDev = !getDatabaseUrl();
 
 if (isDev) {
     // Use SQLite for local development
     try {
         const sqlite3 = require('sqlite3').verbose();
         
-        // Create data directory - use 'data' folder in server root
-        const dataDir = path.join(process.cwd(), 'server', 'data');
+        // Get the directory from import.meta.url instead of process.cwd()
+        const __filename = fileURLToPath(import.meta.url);
+        const __dirname = path.dirname(__filename);
+        const dataDir = path.join(__dirname, '..', '..', 'data');
+        
         if (!fs.existsSync(dataDir)) {
             fs.mkdirSync(dataDir, { recursive: true });
         }
@@ -46,10 +62,11 @@ if (isDev) {
 let pgClient: any = null;
 
 async function getPgClient() {
-    if (!pgClient && process.env.DATABASE_URL) {
+    const dbUrl = getDatabaseUrl();
+    if (!pgClient && dbUrl) {
         pgClient = new Client({
-            connectionString: process.env.DATABASE_URL,
-            ssl: process.env.DATABASE_URL.includes('render.com') ? { rejectUnauthorized: false } : false
+            connectionString: dbUrl,
+            ssl: dbUrl.includes('render.com') ? { rejectUnauthorized: false } : false
         });
         await pgClient.connect();
     }
@@ -63,7 +80,8 @@ async function getPgClient() {
 export async function initializeDatabase() {
     if (isPostgres) {
         // Only initialize PostgreSQL if DATABASE_URL is configured
-        if (!process.env.DATABASE_URL) {
+        const dbUrl = getDatabaseUrl();
+        if (!dbUrl) {
             if (isDev) {
                 console.warn('⚠️  DATABASE_URL not set on local dev - skipping database initialization');
                 console.warn('   Run on Render with DATABASE_URL set to enable PostgreSQL');
