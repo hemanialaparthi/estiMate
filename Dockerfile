@@ -3,13 +3,13 @@ ARG NODE_VERSION=20.17.0
 FROM node:${NODE_VERSION}-slim AS base
 LABEL fly_launch_runtime="Vite"
 WORKDIR /app
+ADD ./* /app
 ENV NODE_ENV="production"
 
 # Build stage
 FROM base AS build
 RUN apt-get update -qq && apt-get install -y build-essential
-RUN pwd
-RUN ls
+RUN npm install
 RUN npm run build
 
 # Final stage using Nginx
