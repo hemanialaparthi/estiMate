@@ -12,7 +12,6 @@
         "strict": false,
         "esModuleInterop": true,
         "skipLibCheck": true,
-        "typeRoots": ["./node_modules/@types"],
         "forceConsistentCasingInFileNames": true,
         "resolveJsonModule": true,
         "declaration": false,

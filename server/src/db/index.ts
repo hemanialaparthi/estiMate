@@ -1,6 +1,10 @@
+// @ts-ignore
 import path from 'path';
+// @ts-ignore
 import fs from 'fs';
+// @ts-ignore
 import { createRequire } from 'module';
+// @ts-ignore
 import pkg from 'pg';
 const { Client } = pkg;
 const require = createRequire(import.meta.url);
