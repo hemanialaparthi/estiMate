@@ -1,5 +1,5 @@
 # syntax = docker/dockerfile:1
-ARG NODE_VERSION=20.9.0
+ARG NODE_VERSION=20.17.0
 FROM node:${NODE_VERSION}-slim AS base
 LABEL fly_launch_runtime="Vite"
 WORKDIR /app
