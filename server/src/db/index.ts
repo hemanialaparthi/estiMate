@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 import path from 'path';
 import fs from 'fs';
 import { createRequire } from 'module';
