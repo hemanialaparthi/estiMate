@@ -8,10 +8,7 @@ ENV NODE_ENV="production"
 # Build stage
 FROM base as build
 RUN apt-get update -qq && apt-get install -y build-essential
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
-COPY . .
-RUN yarn run build
+RUN npm run build
 
 # Final stage using Nginx
 FROM nginx
