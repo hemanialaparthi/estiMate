@@ -1,13 +1,15 @@
 # syntax = docker/dockerfile:1
 ARG NODE_VERSION=20.9.0
-FROM node:${NODE_VERSION}-slim as base
+FROM node:${NODE_VERSION}-slim AS base
 LABEL fly_launch_runtime="Vite"
 WORKDIR /app
 ENV NODE_ENV="production"
 
 # Build stage
-FROM base as build
+FROM base AS build
 RUN apt-get update -qq && apt-get install -y build-essential
+RUN pwd
+RUN ls
 RUN npm run build
 
 # Final stage using Nginx
