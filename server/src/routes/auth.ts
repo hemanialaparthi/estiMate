@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { query, run } from '../db/index.js';
 import { generateToken, verifyToken } from '../middleware/auth.js';
+// @ts-ignore
 import crypto from 'crypto';
 
 const router = Router();
