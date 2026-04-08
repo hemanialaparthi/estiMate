@@ -95,8 +95,8 @@ const faqs = [
         a: 'Absolutely! Generate shareable links, export tasks as CSV, and collaborate in real-time. Teams can view estimates and manage tasks together.',
     },
     {
-        q: 'What\'s the difference between Free and Premium?',
-        a: 'Free includes unlimited personal estimates and task generation. Premium adds unlimited projects, access to 1,800+ crowd projects, advanced analytics, and team collaboration features.',
+        q: 'What\'s the difference between pricing tiers?',
+        a: 'Free ($0): 1 user, 10 estimates/mo, test drive. Pro ($39/mo): 1 user, 100 estimates/mo, for solo consultants. Team ($149/mo): Up to 10 users, 500 estimates/mo, real-time collaboration. Business ($349/mo): Up to 30 users, 2,000 estimates/mo, priority support & API access.',
     },
     {
         q: 'Do you offer API access?',
@@ -105,33 +105,37 @@ const faqs = [
 ];
 
 const pricingFree = [
-    'Up to 10 projects tracked',
-    'Unlimited estimates from your data',
-    'Project planning & task management',
-    'GitHub, CSV, manual entry',
-    'Basic dashboard & history',
+    '1 user',
+    '10 estimates/month',
+    '5 active projects',
+    'Manual data entry only',
+];
+
+const pricingPro = [
+    '1 user (invite read-only viewers)',
+    '100 estimates/month',
+    'Unlimited projects',
+    'GitHub & CSV integration',
+    'Industry benchmarking (1,800+ real projects)',
+    'Velocity trends & team performance insights',
 ];
 
 const pricingTeam = [
-    'Everything in Premium',
-    'Up to 5 team members',
+    'Up to 10 users',
+    '500 estimates/month',
+    'Everything in Pro',
     'Real-time collaboration',
-    'Shared estimates & projects',
+    'Shared workspace',
     'Team activity logs',
-    'Custom workspace',
-    'Email support',
-    'SSO (coming soon)',
 ];
 
-const pricingPremium = [
-    'Everything in Free',
-    'Unlimited projects',
-    'Access crowd data (1,800+ projects)',
-    'Dynamic ISO900 compliance',
-    'Advanced insights & benchmarking',
-    'Velocity trends vs industry',
-    'Download reports',
+const pricingBusiness = [
+    'Up to 30 users',
+    '2,000 estimates/month',
+    'Everything in Team',
     'Priority support',
+    'Advanced security & compliance',
+    'API access & custom integrations',
 ];
 
 export default function Landing() {
@@ -493,73 +497,119 @@ export default function Landing() {
                 padding: '80px 40px',
                 background: 'linear-gradient(180deg, transparent, rgba(124,58,237,0.05))',
             }}>
-                <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-                    <div style={{ textAlign: 'center', marginBottom: 56 }}>
+                <div style={{ maxWidth: 1300, margin: '0 auto' }}>
+                    <div style={{ textAlign: 'center', marginBottom: 60 }}>
                         <h2 style={{ marginBottom: 12 }}>Simple, transparent pricing</h2>
-                        <p style={{ color: 'var(--text-secondary)' }}>Start free. Upgrade when you need crowd data.</p>
+                        <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem' }}>Pay per month or annually and save 17%. All annual plans include discounts.</p>
                     </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 24 }}>
+                    
+                    {/* Main grid with Business tier featured */}
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 24, alignItems: 'start' }}>
                         {/* Free */}
-                        <div className="card">
-                            <div style={{ marginBottom: 8 }}>
+                        <div className="card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                            <div style={{ marginBottom: 18, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <span className="badge badge-purple">Free</span>
+                                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>1 user</span>
                             </div>
-                            <div style={{ fontSize: '2.5rem', fontWeight: 800, margin: '16px 0 4px' }}>$0</div>
-                            <div style={{ color: 'var(--text-muted)', marginBottom: 24 }}>Forever free</div>
-                            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 28 }}>
+                            <div style={{ marginBottom: 8 }}>
+                                <div style={{ fontSize: '2.8rem', fontWeight: 800 }}>$0</div>
+                            </div>
+                            <div style={{ color: 'var(--text-muted)', marginBottom: 24, fontSize: '0.9rem' }}>Forever free</div>
+                            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 'auto', paddingBottom: 24 }}>
                                 {pricingFree.map((f) => (
-                                    <li key={f} style={{ display: 'flex', gap: 10, fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                                        <span style={{ color: 'var(--success)' }}>✓</span> {f}
+                                    <li key={f} style={{ display: 'flex', gap: 10, fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+                                        <span style={{ color: 'var(--success)', flexShrink: 0 }}>✓</span> <span>{f}</span>
                                     </li>
                                 ))}
                             </ul>
-                            <button className="btn btn-outline btn-full" onClick={() => navigate('/auth')}>Get started free</button>
+                            <button className="btn btn-outline btn-full" onClick={() => navigate('/auth')}>Get started</button>
                         </div>
-                        {/* Premium */}
-                        <div className="card card-glow" style={{ position: 'relative', overflow: 'hidden' }}>
+
+                        {/* Pro */}
+                        <div className="card card-glow" style={{ position: 'relative', overflow: 'hidden', height: '100%', display: 'flex', flexDirection: 'column' }}>
                             <div style={{
                                 position: 'absolute', top: 0, right: 0, left: 0, height: 2,
                                 background: 'var(--gradient-purple)',
                             }} />
+                            <div style={{ marginBottom: 18, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <span className="badge badge-gold">✦ Pro</span>
+                                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>1 user</span>
+                            </div>
                             <div style={{ marginBottom: 8 }}>
-                                <span className="badge badge-gold">✦ Premium</span>
+                                <div style={{ fontSize: '2.8rem', fontWeight: 800 }}>$39<span style={{ fontSize: '1rem', fontWeight: 400, color: 'var(--text-muted)' }}>/mo</span></div>
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, margin: '16px 0 4px' }}>
-                                <span style={{ fontSize: '2.5rem', fontWeight: 800 }}>$12</span>
-                                <span style={{ color: 'var(--text-muted)' }}>/month</span>
-                            </div>
-                            <div style={{ color: 'var(--text-muted)', marginBottom: 24 }}>$99/year · save 30%</div>
-                            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 28 }}>
-                                {pricingPremium.map((f) => (
-                                    <li key={f} style={{ display: 'flex', gap: 10, fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                                        <span style={{ color: 'var(--purple-400)' }}>✦</span> {f}
+                            <div style={{ color: 'var(--text-muted)', marginBottom: 24, fontSize: '0.9rem' }}>$390/year (save 17%)</div>
+                            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 'auto', paddingBottom: 24 }}>
+                                {pricingPro.map((f) => (
+                                    <li key={f} style={{ display: 'flex', gap: 10, fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+                                        <span style={{ color: 'var(--purple-400)', flexShrink: 0 }}>✦</span> <span>{f}</span>
                                     </li>
                                 ))}
                             </ul>
-                            <button className="btn btn-primary btn-full" onClick={() => navigate('/auth')}>Start free trial</button>
+                            <button className="btn btn-primary btn-full" onClick={() => navigate('/auth')}>Try free for 14 days</button>
                         </div>
+
                         {/* Team */}
-                        <div className="card card-glow" style={{ position: 'relative', overflow: 'hidden', border: '2px solid var(--purple-400)' }}>
+                        <div className="card card-glow" style={{ position: 'relative', overflow: 'hidden', height: '100%', display: 'flex', flexDirection: 'column' }}>
                             <div style={{
                                 position: 'absolute', top: 0, right: 0, left: 0, height: 2,
                                 background: 'var(--gradient-purple)',
                             }} />
-                            <div style={{ marginBottom: 8 }}>
+                            <div style={{ marginBottom: 18, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <span className="badge badge-gold">⭐ Team</span>
+                                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Up to 10</span>
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, margin: '16px 0 4px' }}>
-                                <span style={{ fontSize: '2.5rem', fontWeight: 800 }}>$79</span>
-                                <span style={{ color: 'var(--text-muted)' }}>/month per team</span>
+                            <div style={{ marginBottom: 8 }}>
+                                <div style={{ fontSize: '2.8rem', fontWeight: 800 }}>$149<span style={{ fontSize: '1rem', fontWeight: 400, color: 'var(--text-muted)' }}>/mo</span></div>
                             </div>
-                            <div style={{ color: 'var(--text-muted)', marginBottom: 24 }}>$790/year · save 15%</div>
-                            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 28 }}>
+                            <div style={{ color: 'var(--text-muted)', marginBottom: 24, fontSize: '0.9rem' }}>$1,490/year (save 17%)</div>
+                            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 'auto', paddingBottom: 24 }}>
                                 {pricingTeam.map((f) => (
-                                    <li key={f} style={{ display: 'flex', gap: 10, fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                                        <span style={{ color: 'var(--purple-400)' }}>✦</span> {f}
+                                    <li key={f} style={{ display: 'flex', gap: 10, fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+                                        <span style={{ color: 'var(--purple-400)', flexShrink: 0 }}>✦</span> <span>{f}</span>
                                     </li>
                                 ))}
                             </ul>
-                            <button className="btn btn-primary btn-full" onClick={() => navigate('/auth')}>Start free trial</button>
+                            <button className="btn btn-primary btn-full" onClick={() => navigate('/auth')}>Try free for 14 days</button>
+                        </div>
+
+                        {/* Business - FEATURED */}
+                        <div className="card card-glow" style={{ 
+                            position: 'relative', 
+                            overflow: 'hidden', 
+                            border: '2px solid var(--purple-400)',
+                            height: '100%',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            boxShadow: '0 20px 60px rgba(124,58,237,0.15)',
+                        }}>
+                            <div style={{
+                                position: 'absolute', top: 0, right: 0, left: 0, height: 3,
+                                background: 'var(--gradient-purple)',
+                            }} />
+                            <div style={{ 
+                                marginBottom: 18, 
+                                display: 'flex', 
+                                justifyContent: 'space-between', 
+                                alignItems: 'center',
+                                gap: 8,
+                            }}>
+                                <span className="badge badge-gold">🚀 Business</span>
+                                <span style={{ fontSize: '0.7rem', fontWeight: 600, background: 'rgba(124,58,237,0.2)', color: 'var(--purple-400)', padding: '4px 8px', borderRadius: 4 }}>BEST VALUE</span>
+                            </div>
+                            <div style={{ marginBottom: 8 }}>
+                                <div style={{ fontSize: '3rem', fontWeight: 900, color: 'var(--purple-400)' }}>$349<span style={{ fontSize: '1rem', fontWeight: 400, color: 'var(--text-muted)' }}>/mo</span></div>
+                            </div>
+                            <div style={{ color: 'var(--text-muted)', marginBottom: 24, fontSize: '0.9rem' }}>$3,490/year (save 17%)</div>
+                            <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--purple-400)', marginBottom: 24, paddingBottom: 18, borderBottom: '1px solid rgba(124,58,237,0.1)' }}>Up to 30 users • 2,000 estimates/mo</div>
+                            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 'auto', paddingBottom: 24 }}>
+                                {pricingBusiness.map((f) => (
+                                    <li key={f} style={{ display: 'flex', gap: 10, fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+                                        <span style={{ color: 'var(--purple-400)', flexShrink: 0 }}>✦</span> <span>{f}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                            <button className="btn btn-primary btn-full" onClick={() => navigate('/auth')} style={{ background: 'var(--gradient-purple)' }}>Try free for 14 days</button>
                         </div>
                     </div>
                 </div>
