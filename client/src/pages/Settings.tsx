@@ -39,7 +39,7 @@ export default function Settings() {
     };
 
     return (
-        <div className="fade-in" style={{ maxWidth: 800 }}>
+        <div className="fade-in page-shell" style={{ maxWidth: 900 }}>
             <div className="page-header">
                 <h2>Account Settings</h2>
                 <p>Manage your subscription and data preferences.</p>

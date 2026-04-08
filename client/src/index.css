@@ -57,6 +57,9 @@ html {
 body {
     font-family: var(--font);
     background-color: var(--bg-primary);
+    background-image:
+        radial-gradient(circle at 10% -10%, rgba(124, 58, 237, 0.2), transparent 35%),
+        radial-gradient(circle at 90% 0%, rgba(99, 102, 241, 0.16), transparent 30%);
     color: var(--text-primary);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
@@ -185,10 +188,12 @@ a:hover {
     border-radius: var(--radius-lg);
     padding: 32px;
     transition: var(--transition);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
 }
 
 .card:hover {
-    border-color: rgba(124, 58, 237, 0.2);
+    border-color: rgba(124, 58, 237, 0.32);
+    transform: translateY(-2px);
 }
 
 .card-glow {
@@ -483,6 +488,92 @@ a:hover {
 .page-header p {
     color: var(--text-secondary);
     font-size: 0.95rem;
+}
+
+.page-shell {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.page-header {
+    background: rgba(12, 12, 24, 0.72);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 22px 24px;
+    backdrop-filter: blur(12px);
+}
+
+.table-wrap {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.app-shell {
+    display: flex;
+    min-height: 100vh;
+    background: transparent;
+}
+
+.app-sidebar {
+    width: 260px;
+    background: rgba(12, 12, 24, 0.92);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 18px 0;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    backdrop-filter: blur(14px);
+}
+
+.app-logo {
+    padding: 0 20px 20px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.app-nav {
+    flex: 1;
+    padding: 16px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.app-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 12px;
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: var(--transition);
+    text-decoration: none;
+}
+
+.app-nav-link.active {
+    color: var(--text-primary);
+    background: rgba(124, 58, 237, 0.17);
+    border: 1px solid rgba(124, 58, 237, 0.35);
+}
+
+.app-nav-link:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.app-main {
+    flex: 1;
+    padding: 34px;
+    overflow-y: auto;
+    max-width: 100%;
 }
 
 .grid-2 {
@@ -1007,7 +1098,7 @@ a:hover {
     }
 
     /* Mobile sidebar - we'll add collapsible */
-    aside {
+    aside, .app-sidebar {
         width: 100%;
         position: fixed;
         left: 0;
@@ -1019,8 +1110,9 @@ a:hover {
         z-index: 100;
     }
 
-    main {
+    main, .app-main {
         margin-bottom: 100px;
+        padding: 20px;
     }
 
     .btn {

@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 
 export default function Estimate() {
     const { isPremium } = useAuth();
     const { addToast } = useToast();
+    const navigate = useNavigate();
     const [form, setForm] = useState({
         projectType: 'feature',
         estimatedLOC: '',
@@ -14,6 +16,7 @@ export default function Estimate() {
     });
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [loading, setLoading] = useState(false);
+    const [creatingBoard, setCreatingBoard] = useState(false);
     const [result, setResult] = useState<any>(null);
 
     const validateForm = () => {
@@ -79,8 +82,40 @@ export default function Estimate() {
         }
     };
 
+    const handleGenerateTaskBoard = async () => {
+        if (!result) return;
+
+        setCreatingBoard(true);
+        try {
+            const projectName = `${form.projectType} estimate (${new Date().toLocaleDateString()})`;
+            const response = await axios.post('/api/projects/add-manual', {
+                projectName,
+                projectType: form.projectType,
+                estimatedLOC: Number(form.estimatedLOC),
+                actualDays: Number(result.estimatedDays),
+                actualPeople: Number(form.teamSize),
+            });
+
+            navigate('/taskboard', {
+                state: {
+                    autoGenerate: true,
+                    projectId: response.data.projectId,
+                },
+            });
+        } catch (err: any) {
+            addToast({
+                type: 'error',
+                title: 'Task board generation failed',
+                message: err.response?.data?.message || err.response?.data?.error || 'Could not create project for task board',
+                duration: 3000,
+            });
+        } finally {
+            setCreatingBoard(false);
+        }
+    };
+
     return (
-        <div className="fade-in">
+        <div className="fade-in page-shell">
             <div className="page-header">
                 <h2>Run Estimation Engine</h2>
                 <p>Get data-driven estimates for your next project.</p>
@@ -268,7 +303,17 @@ export default function Estimate() {
                                     <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
                                         Based on previous estimates, split this project into actionable tasks. Assign work evenly among your {result.peopleForDeadline || form.teamSize} team members to ensure the {result.estimatedDays} days timeline is met.
                                     </p>
-                                    <button className="btn btn-outline btn-sm" style={{ marginTop: 12 }} onClick={(e) => { e.preventDefault(); alert('Demo: Task Board Generator'); }}>Generate Task Board</button>
+                                    <button
+                                        className="btn btn-outline btn-sm"
+                                        style={{ marginTop: 12 }}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            handleGenerateTaskBoard();
+                                        }}
+                                        disabled={creatingBoard}
+                                    >
+                                        {creatingBoard ? 'Creating Task Board...' : 'Generate Task Board'}
+                                    </button>
                                 </div>
 
                                 {/* Dynamic ISO900 compliance (Premium only) */}

@@ -23,7 +23,7 @@ export default function Insights() {
 
     if (!isPremium) {
         return (
-            <div className="fade-in" style={{ height: '70vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
+            <div className="fade-in page-shell" style={{ height: '70vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
                 <div style={{ fontSize: 60, marginBottom: 20 }}>🔒</div>
                 <h2 style={{ marginBottom: 12 }}>Insights is a Premium Feature</h2>
                 <p style={{ color: 'var(--text-secondary)', maxWidth: 450, marginBottom: 32 }}>
@@ -39,7 +39,7 @@ export default function Insights() {
     if (loading) return <div style={{ textAlign: 'center', padding: 80 }}><span className="spinner" /></div>;
 
     return (
-        <div className="fade-in">
+        <div className="fade-in page-shell">
             <div className="page-header">
                 <h2>Advanced Insights</h2>
                 <p>Benchmark your team's performance against industry averages.</p>

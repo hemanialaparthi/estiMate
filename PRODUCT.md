@@ -95,32 +95,28 @@ Production-ready security:
 ### 🆓 Free
 **$0/month · Forever free**
 
-Perfect for individuals getting started with estimation.
+Perfect for solo developers and teams testing the platform.
 
 **Features:**
-- ✓ Up to 10 projects tracked
-- ✓ Unlimited estimates from your data
-- ✓ Project planning & task management
-- ✓ GitHub, CSV, manual entry
-- ✓ Basic dashboard & history
+- ✓ Up to 10 projects
+- ✓ Unlimited estimates & task generation
+- ✓ GitHub, CSV, and manual import
+- ✓ Basic dashboard & task board
 
 **Best for:** Solo developers, freelancers, small teams testing the platform
 
 ---
 
-### ✦ Premium
-**$12/month or $99/year (save 30%)**
+### ✦ Pro
+**$29/month or $290/year (save 17%)**
 
-For individual power users who need advanced analytics and industry benchmarking.
+For individual power users who need unlimited projects and industry benchmarking.
 
 **Features:**
 - ✓ Everything in Free
 - ✓ Unlimited projects
-- ✓ Access crowd data (1,800+ projects)
-- ✓ Dynamic ISO 9001 compliance
-- ✓ Advanced insights & benchmarking
-- ✓ Velocity trends vs industry
-- ✓ Download reports
+- ✓ 1,800+ crowd projects for benchmarking
+- ✓ Advanced analytics & velocity trends
 - ✓ Priority support
 
 **Best for:** Agencies, consultants, individual engineers at larger companies
@@ -128,41 +124,59 @@ For individual power users who need advanced analytics and industry benchmarking
 ---
 
 ### ⭐ Team
-**$79/month per team or $790/year (save 15%)**
+**$49/user/month (min 3 users) or $470/user/year**
 
-For teams that need real-time collaboration and enterprise features.
+For small teams that need real-time collaboration and shared workspaces.
 
 **Features:**
-- ✓ Everything in Premium
-- ✓ Up to 5 team members
-- ✓ Real-time collaboration
-- ✓ Shared estimates & projects
-- ✓ Team activity logs
-- ✓ Custom workspace
-- ✓ Email support
-- ✓ SSO (coming soon)
+- ✓ Everything in Pro
+- ✓ Real-time collaboration & shared workspace
+- ✓ Team activity logs & audit trails
+- ✓ 3-5 team member seats
+- ✓ Team SSO (coming soon)
 
 **Best for:** Engineering teams, product teams, cross-functional project planning groups
 
 ---
 
+### 🏢 Enterprise
+**Custom pricing: $500–5,000/month**
+
+For large organizations with advanced security and integration needs.
+
+**Features:**
+- ✓ Everything in Team
+- ✓ Unlimited team members
+- ✓ SSO with SAML/OAuth
+- ✓ REST API & custom integrations
+- ✓ Dedicated account manager & 24/7 support
+- ✓ On-premises deployment option
+
+**Best for:** Large organizations (20+ people), enterprises, regulated industries
+
+---
+
 ## Tier Comparison
 
-| Feature | Free | Premium | Team |
-|---------|------|---------|------|
-| **Price** | $0 | $12/mo ($99/yr) | $79/mo ($790/yr) |
-| **Projects** | Up to 10 | Unlimited | Unlimited |
-| **Estimates** | Unlimited | Unlimited | Unlimited |
-| **Task Generation** | ✓ | ✓ | ✓ |
-| **Data Import** | GitHub, CSV, Manual | GitHub, CSV, Manual | GitHub, CSV, Manual |
-| **Crowd Data** | — | 1,800+ projects | 1,800+ projects |
-| **Advanced Analytics** | — | ✓ | ✓ |
-| **Team Members** | — | — | Up to 5 |
-| **Real-time Collaboration** | — | — | ✓ |
-| **Shared Workspaces** | — | — | ✓ |
-| **Activity Logs** | — | — | ✓ |
-| **Priority Support** | — | ✓ | ✓ |
-| **SSO** | — | — | Coming soon |
+| Feature | Free | Pro | Team | Enterprise |
+|---------|------|-----|------|------------|
+| **Price** | $0 | $29/mo ($290/yr) | $49/user/mo ($470/yr) | Custom |
+| **Min Users** | — | 1 | 3 | 20+ |
+| **Projects** | Up to 10 | Unlimited | Unlimited | Unlimited |
+| **Estimates** | Unlimited | Unlimited | Unlimited | Unlimited |
+| **Task Generation** | ✓ | ✓ | ✓ | ✓ |
+| **Data Import** | GitHub, CSV, Manual | GitHub, CSV, Manual | GitHub, CSV, Manual | GitHub, CSV, Manual |
+| **Crowd Data** | — | 1,800+ projects | 1,800+ projects | 1,800+ projects |
+| **Advanced Analytics** | — | ✓ | ✓ | ✓ |
+| **Team Collaboration** | — | — | ✓ | ✓ |
+| **Shared Workspaces** | — | — | ✓ | ✓ |
+| **Activity Logs** | — | — | ✓ | ✓ |
+| **API Access** | — | — | — | ✓ |
+| **Webhooks** | — | — | — | ✓ |
+| **SSO / SAML** | — | — | Coming soon | ✓ |
+| **Custom Integrations** | — | — | — | ✓ |
+| **Dedicated Support** | — | — | — | ✓ |
+| **On-Premises** | — | — | — | ✓ |
 
 ---
 

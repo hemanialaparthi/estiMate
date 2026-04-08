@@ -34,7 +34,14 @@ export default function Projects() {
             const res = await axios.get('/api/projects');
             setProjects(res.data.projects);
             setStats({ total: res.data.total, limit: res.data.limit });
-        } catch (_) { } finally { setLoading(false); }
+        } catch (err) {
+            console.error('Failed to fetch projects:', err);
+            if (err instanceof Error) {
+                setError(`Failed to load projects: ${err.message}`);
+            } else {
+                setError('Failed to load projects');
+            }
+        } finally { setLoading(false); }
     };
 
     useEffect(() => { fetchProjects(); }, []);
@@ -97,18 +104,25 @@ export default function Projects() {
             await axios.delete(`/api/projects/${id}`);
             setProjects(projects.filter(p => p.id !== id));
             setStats(prev => ({ ...prev, total: prev.total - 1 }));
-        } catch (_) { alert('Delete failed'); }
+            setSuccess('Project deleted successfully');
+        } catch (err) {
+            console.error('Delete failed:', err);
+            alert('Delete failed - please try again');
+        }
     };
 
     const toggleShare = async (id: number, current: boolean) => {
         try {
             await axios.patch(`/api/projects/${id}/share`, { isShared: !current });
             setProjects(projects.map(p => p.id === id ? { ...p, is_shared: !current } : p));
-        } catch (_) { alert('Update failed'); }
+        } catch (err) {
+            console.error('Share toggle failed:', err);
+            alert('Update failed - please try again');
+        }
     };
 
     return (
-        <div className="fade-in">
+        <div className="fade-in page-shell">
             <div className="page-header">
                 <h2>Manage Project Data</h2>
                 <p>Add historical data to improve your estimation accuracy.</p>
@@ -229,6 +243,7 @@ export default function Projects() {
                 ) : projects.length === 0 ? (
                     <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)' }}>No projects added yet.</div>
                 ) : (
+                    <div className="table-wrap">
                     <table className="data-table">
                         <thead>
                             <tr>
@@ -263,6 +278,7 @@ export default function Projects() {
                             ))}
                         </tbody>
                     </table>
+                    </div>
                 )}
             </div>
         </div>

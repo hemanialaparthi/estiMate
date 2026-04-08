@@ -59,7 +59,7 @@ export default function Dashboard() {
         : 0;
 
     return (
-        <div className="fade-in">
+        <div className="fade-in page-shell">
             <div className="page-header">
                 <h2>Welcome back, <span className="gradient-text">{user?.email.split('@')[0]}</span></h2>
                 <p>Your project estimation dashboard</p>
@@ -146,6 +146,7 @@ export default function Dashboard() {
                         </button>
                     </div>
                 ) : (
+                    <div className="table-wrap">
                     <table className="data-table">
                         <thead>
                             <tr>
@@ -174,6 +175,7 @@ export default function Dashboard() {
                             ))}
                         </tbody>
                     </table>
+                    </div>
                 )}
             </div>
         </div>

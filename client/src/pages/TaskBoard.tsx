@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 interface Task {
     id: number;
@@ -30,6 +31,8 @@ interface Board {
 
 export default function TaskBoard() {
     // const { } = useAuth();
+    const location = useLocation();
+    const routeState = location.state as { autoGenerate?: boolean; projectId?: number } | null;
     const [projects, setProjects] = useState<Project[]>([]);
     const [loading, setLoading] = useState(true);
     const [board, setBoard] = useState<Board | null>(null);
@@ -41,6 +44,13 @@ export default function TaskBoard() {
     useEffect(() => {
         fetchProjects();
     }, []);
+
+    useEffect(() => {
+        if (!routeState?.autoGenerate || !routeState?.projectId) return;
+        generateBoard(routeState.projectId);
+        // Trigger once when arriving from estimate page.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [routeState?.autoGenerate, routeState?.projectId]);
 
     const fetchProjects = async () => {
         try {
@@ -55,6 +65,7 @@ export default function TaskBoard() {
 
     const generateBoard = async (projectId: number) => {
         setGenerating(true);
+        setSelecting(String(projectId));
         setError('');
         try {
             const res = await axios.post('/api/tasks/generate', { projectId });
@@ -131,7 +142,7 @@ export default function TaskBoard() {
     }
 
     return (
-        <div className="fade-in">
+        <div className="fade-in page-shell">
             <div className="page-header">
                 <h2>📋 Task Board Generator</h2>
                 <p>Break down projects into actionable tasks with time estimates.</p>
@@ -154,7 +165,7 @@ export default function TaskBoard() {
                                 <div
                                     key={project.id}
                                     style={{
-                                        border: '1px solid var(--border-color)',
+                                        border: '1px solid var(--border)',
                                         borderRadius: 8,
                                         padding: 16,
                                         cursor: 'pointer',
@@ -169,7 +180,7 @@ export default function TaskBoard() {
                                     }}
                                     onMouseLeave={(e) => {
                                         (e.currentTarget as HTMLElement).style.backgroundColor = '';
-                                        (e.currentTarget as HTMLElement).style.borderColor = 'var(--border-color)';
+                                        (e.currentTarget as HTMLElement).style.borderColor = 'var(--border)';
                                     }}
                                 >
                                     <div>
@@ -232,14 +243,14 @@ export default function TaskBoard() {
                                 <div
                                     key={status}
                                     style={{
-                                        border: '1px solid var(--border-color)',
+                                        border: '1px solid var(--border)',
                                         borderRadius: 12,
                                         padding: 16,
                                         backgroundColor: 'var(--bg-secondary)',
                                         minHeight: '500px'
                                     }}
                                 >
-                                    <h4 style={{ marginBottom: 16, paddingBottom: 12, borderBottom: '2px solid var(--border-color)' }}>
+                                    <h4 style={{ marginBottom: 16, paddingBottom: 12, borderBottom: '2px solid var(--border)' }}>
                                         {statusLabel}
                                     </h4>
 
@@ -253,7 +264,7 @@ export default function TaskBoard() {
                                                 <div
                                                     key={task.id}
                                                     style={{
-                                                        border: '1px solid var(--border-color)',
+                                                        border: '1px solid var(--border)',
                                                         borderLeft: `4px solid ${categoryColors[task.category]}`,
                                                         borderRadius: 8,
                                                         padding: 12,
@@ -336,7 +347,7 @@ export default function TaskBoard() {
                                                                 marginTop: 8,
                                                                 padding: '4px',
                                                                 borderRadius: 4,
-                                                                border: '1px solid var(--border-color)',
+                                                                border: '1px solid var(--border)',
                                                                 fontSize: '0.85rem'
                                                             }}
                                                             onChange={(e) => {
