@@ -10,7 +10,7 @@ ENV NODE_ENV="production"
 FROM base AS build
 RUN apt-get update -qq && apt-get install -y build-essential
 RUN npm install
-RUN npm run build
+RUN npm run dev
 
 # Final stage using Nginx
 FROM nginx
