@@ -32,7 +32,7 @@ interface Board {
 export default function TaskBoard() {
     // const { } = useAuth();
     const location = useLocation();
-    const apiURL = 'https://estimate-api-vgw1.onrender.com';
+    const apiURL = import.meta.env.VITE_API_URL || 'https://estimate-api-vgw1.onrender.com';
     const routeState = location.state as { autoGenerate?: boolean; projectId?: number } | null;
     const [projects, setProjects] = useState<Project[]>([]);
     const [loading, setLoading] = useState(true);

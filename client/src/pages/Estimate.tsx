@@ -8,7 +8,7 @@ export default function Estimate() {
     const { isPremium } = useAuth();
     const { addToast } = useToast();
     const navigate = useNavigate();
-    const apiURL = 'https://estimate-api-vgw1.onrender.com';
+    const apiURL = import.meta.env.VITE_API_URL || 'https://estimate-api-vgw1.onrender.com';
     const [form, setForm] = useState({
         projectType: 'feature',
         estimatedLOC: '',

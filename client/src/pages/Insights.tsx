@@ -7,7 +7,7 @@ import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Responsive
 export default function Insights() {
     const { isPremium } = useAuth();
     const navigate = useNavigate();
-    const apiURL = 'https://estimate-api-vgw1.onrender.com';
+    const apiURL = import.meta.env.VITE_API_URL || 'https://estimate-api-vgw1.onrender.com';
     const [data, setData] = useState<any>(null);
     const [loading, setLoading] = useState(true);
 
