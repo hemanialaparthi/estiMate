@@ -30,6 +30,34 @@ router.get('/history', async (req: Request, res: Response) => {
     }
 });
 
+// DELETE /api/estimate/:id - Delete estimation by ID
+router.delete('/:id', async (req: Request, res: Response) => {
+    const estimationId = parseInt(req.params.id);
+    
+    if (isNaN(estimationId)) {
+        return res.status(400).json({
+            error: 'INVALID_ID',
+            message: 'Estimation ID must be a number',
+        });
+    }
+
+    try {
+        // Verify ownership and delete
+        await run(
+            'DELETE FROM estimation_history WHERE id = ? AND user_id = ?',
+            [estimationId, req.userId]
+        );
+
+        res.json({
+            success: true,
+            message: 'Estimation deleted successfully',
+        });
+    } catch (err: any) {
+        console.error('Estimation delete error:', err);
+        res.status(500).json({ error: 'Failed to delete estimation' });
+    }
+});
+
 interface EstimateRequest {
     projectType: string;
     estimatedLOC: number;
@@ -115,6 +143,35 @@ router.post('/', async (req: Request, res: Response) => {
             error: 'INVALID_REQUEST',
             message: 'projectType, estimatedLOC, and teamSize are required',
         });
+    }
+
+    // Check tier limits
+    try {
+        const userResult = await query('SELECT subscription_tier FROM users WHERE id = ?', [req.userId]) as any;
+        const userRows = userResult?.rows || userResult || [];
+        const user = Array.isArray(userRows) ? userRows[0] : userRows;
+        const tier = user?.subscription_tier || 'free';
+
+        if (tier === 'free') {
+            const historyResult = await query(
+                'SELECT COUNT(*) as count FROM estimation_history WHERE user_id = ?',
+                [req.userId]
+            ) as any;
+            const historyRows = historyResult?.rows || historyResult || [];
+            const historyCount = Array.isArray(historyRows) ? historyRows[0]?.count : historyRows?.count || 0;
+
+            if (historyCount >= 10) {
+                return res.status(403).json({
+                    error: 'LIMIT_EXCEEDED',
+                    message: 'Free tier limited to 10 estimations. Upgrade to Premium for unlimited.',
+                    current: historyCount,
+                    limit: 10,
+                });
+            }
+        }
+    } catch (limitErr) {
+        console.warn('Failed to check tier limits:', limitErr);
+        // Continue without blocking on limit check
     }
 
     if (!['feature', 'refactor', 'infrastructure', 'research', 'bugfix'].includes(projectType)) {
@@ -210,6 +267,34 @@ router.post('/', async (req: Request, res: Response) => {
             error: 'ESTIMATION_ERROR',
             message: error.message || 'Failed to calculate estimate',
         });
+    }
+});
+
+// DELETE /api/estimate/:id - Delete estimation by ID
+router.delete('/:id', async (req: Request, res: Response) => {
+    const estimationId = parseInt(req.params.id);
+    
+    if (isNaN(estimationId)) {
+        return res.status(400).json({
+            error: 'INVALID_ID',
+            message: 'Estimation ID must be a number',
+        });
+    }
+
+    try {
+        // Verify ownership and delete
+        await run(
+            'DELETE FROM estimation_history WHERE id = ? AND user_id = ?',
+            [estimationId, req.userId]
+        );
+
+        res.json({
+            success: true,
+            message: 'Estimation deleted successfully',
+        });
+    } catch (err: any) {
+        console.error('Estimation delete error:', err);
+        res.status(500).json({ error: 'Failed to delete estimation' });
     }
 });
 

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getEnv } from '../utils/env.js';
 
 export interface EstimationResult {
     repo_url: string;
@@ -23,7 +24,6 @@ interface Feature {
 }
 
 const GITHUB_API_BASE = 'https://api.github.com';
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
 /**
  * Parse GitHub URL to extract owner and repo
@@ -64,8 +64,9 @@ async function fetchClosedPRs(owner: string, repo: string): Promise<PullRequest[
             'Accept': 'application/vnd.github.v3+json',
         };
 
-        if (GITHUB_TOKEN) {
-            headers['Authorization'] = `token ${GITHUB_TOKEN}`;
+        const githubToken = getEnv('GITHUB_TOKEN', '');
+        if (githubToken) {
+            headers['Authorization'] = `token ${githubToken}`;
         }
 
         console.log(`📥 Fetching PRs for ${owner}/${repo}...`);

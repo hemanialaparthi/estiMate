@@ -168,33 +168,33 @@ export default function Landing() {
                 position: 'sticky', top: 0, zIndex: 100,
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 padding: '16px 40px',
-                background: 'rgba(7,7,15,0.8)',
+                background: 'rgba(255, 255, 255, 0.95)',
                 backdropFilter: 'blur(20px)',
-                borderBottom: '1px solid var(--border)',
+                borderBottom: '1.5px solid var(--border)',
             }}>
-                <span style={{ fontWeight: 800, fontSize: '1.1rem', letterSpacing: -0.5 }}>estiMate</span>
+                <span style={{ fontWeight: 800, fontSize: '1.2rem', letterSpacing: -0.5, color: 'var(--text-primary)' }}>estiMate</span>
                 <div style={{ display: 'flex', gap: 24, flex: 1, justifyContent: 'center' }}>
                     <button 
                         onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-                        style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-primary)', fontSize: '0.9rem' }}
+                        style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)', fontSize: '1rem', fontWeight: 500 }}
                     >
                         About
                     </button>
                     <button 
                         onClick={() => document.getElementById('core-features')?.scrollIntoView({ behavior: 'smooth' })}
-                        style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-primary)', fontSize: '0.9rem' }}
+                        style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)', fontSize: '1rem', fontWeight: 500 }}
                     >
                         Core Features
                     </button>
                     <button 
                         onClick={() => document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' })}
-                        style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-primary)', fontSize: '0.9rem' }}
+                        style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)', fontSize: '1rem', fontWeight: 500 }}
                     >
                         FAQs
                     </button>
                     <button 
                         onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
-                        style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-primary)', fontSize: '0.9rem' }}
+                        style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)', fontSize: '1rem', fontWeight: 500 }}
                     >
                         Pricing
                     </button>
@@ -237,7 +237,7 @@ export default function Landing() {
                 </h1>
 
                 <p style={{
-                    maxWidth: 560, marginBottom: 40, fontSize: '1.15rem',
+                    maxWidth: 560, marginBottom: 40, fontSize: '1.25rem',
                     color: 'var(--text-secondary)', lineHeight: 1.7,
                 }}>
                     60% of software projects miss their deadlines. Stop guessing.
@@ -256,7 +256,7 @@ export default function Landing() {
                     </button>
                 </div>
 
-                <div style={{ marginTop: 56, color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+                <div style={{ marginTop: 56, color: 'var(--text-muted)', fontSize: '0.95rem' }}>
                     Trusted by engineering teams at fast-growing startups · 1,800+ projects analyzed
                 </div>
             </section>
@@ -270,13 +270,13 @@ export default function Landing() {
                 <div style={{ maxWidth: 1200, margin: '0 auto' }}>
                     <div style={{ textAlign: 'center', marginBottom: 56 }}>
                         <h2 style={{ marginBottom: 12 }}>What is estiMate?</h2>
-                        <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', maxWidth: 600, margin: '0 auto', lineHeight: 1.7 }}>
+                        <p style={{ color: 'var(--text-secondary)', fontSize: '1.15rem', maxWidth: 600, margin: '0 auto', lineHeight: 1.7 }}>
                             estiMate is an AI-powered estimation platform that transforms your project history into accurate, data-driven timelines. Stop relying on intuition - let real data guide your planning.
                         </p>
                     </div>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, alignItems: 'center' }}>
                         <div>
-                            <h3 style={{ marginBottom: 24, fontSize: '1.3rem' }}>The Problem We Solve</h3>
+                            <h3 style={{ marginBottom: 24, fontSize: '1.5rem' }}>The Problem We Solve</h3>
                             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 16 }}>
                                 <li style={{ display: 'flex', gap: 12, color: 'var(--text-secondary)' }}>
                                     <span style={{ color: 'var(--warning)', flexShrink: 0 }}>⚠</span>
@@ -297,7 +297,7 @@ export default function Landing() {
                             </ul>
                         </div>
                         <div>
-                            <h3 style={{ marginBottom: 24, fontSize: '1.3rem' }}>Our Solution</h3>
+                            <h3 style={{ marginBottom: 24, fontSize: '1.5rem' }}>Our Solution</h3>
                             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 16 }}>
                                 <li style={{ display: 'flex', gap: 12, color: 'var(--text-secondary)' }}>
                                     <span style={{ color: 'var(--success)', flexShrink: 0 }}>✓</span>

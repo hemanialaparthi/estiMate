@@ -44,29 +44,30 @@ export default function DashboardLayout() {
                 </nav>
 
                 <div style={{ padding: '0 12px 16px', borderTop: '1px solid var(--border)', marginTop: 'auto' }}>
-                    <div style={{ padding: '12px', marginBottom: '12px', color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
-                        <p style={{ margin: '4px 0', fontWeight: 500 }}>{user?.email}</p>
-                        <p style={{ margin: '4px 0', fontSize: '0.75rem', opacity: 0.7 }}>{user?.tier.toUpperCase()}</p>
+                    <div style={{ padding: '12px', marginBottom: '12px', color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+                        <p style={{ margin: '4px 0', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.email}</p>
+                        <p style={{ margin: '4px 0', fontSize: '0.85rem', color: 'var(--text-muted)' }}>{user?.tier.toUpperCase()}</p>
                     </div>
                     <button
                         onClick={handleLogout}
                         style={{
                             width: '100%',
-                            padding: '8px 12px',
-                            background: 'rgba(124, 58, 237, 0.1)',
-                            border: '1px solid rgba(124, 58, 237, 0.3)',
+                            padding: '10px 14px',
+                            background: 'rgba(124, 58, 237, 0.08)',
+                            border: '1.5px solid rgba(124, 58, 237, 0.15)',
                             borderRadius: 'var(--radius-md)',
                             color: 'var(--text-secondary)',
-                            fontSize: '0.9rem',
+                            fontSize: '1rem',
+                            fontWeight: 500,
                             cursor: 'pointer',
                             transition: 'var(--transition)',
                         }}
                         onMouseOver={(e) => {
-                            e.currentTarget.style.background = 'rgba(124, 58, 237, 0.2)';
+                            e.currentTarget.style.background = 'rgba(124, 58, 237, 0.15)';
                             e.currentTarget.style.color = 'var(--text-primary)';
                         }}
                         onMouseOut={(e) => {
-                            e.currentTarget.style.background = 'rgba(124, 58, 237, 0.1)';
+                            e.currentTarget.style.background = 'rgba(124, 58, 237, 0.08)';
                             e.currentTarget.style.color = 'var(--text-secondary)';
                         }}
                     >

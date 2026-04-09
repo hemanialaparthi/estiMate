@@ -3,6 +3,7 @@ import { query, run } from '../db/index.js';
 import { verifyToken } from '../middleware/auth.js';
 import axios from 'axios';
 import { analyzeGitHubRepo } from '../services/github-service.js';
+import { getEnv } from '../utils/env.js';
 
 const router = Router();
 
@@ -65,6 +66,35 @@ router.post('/add-manual', async (req: Request, res: Response) => {
         });
     }
 
+    // Check tier limits
+    try {
+        const userResult = await query('SELECT subscription_tier FROM users WHERE id = ?', [req.userId]) as any;
+        const userRows = userResult?.rows || userResult || [];
+        const user = Array.isArray(userRows) ? userRows[0] : userRows;
+        const tier = user?.subscription_tier || 'free';
+
+        if (tier === 'free') {
+            const projectsResult = await query(
+                'SELECT COUNT(*) as count FROM projects WHERE user_id = ?',
+                [req.userId]
+            ) as any;
+            const projectsRows = projectsResult?.rows || projectsResult || [];
+            const projectCount = Array.isArray(projectsRows) ? projectsRows[0]?.count : projectsRows?.count || 0;
+
+            if (projectCount >= 5) {
+                return res.status(403).json({
+                    error: 'LIMIT_EXCEEDED',
+                    message: 'Free tier limited to 5 projects. Upgrade to Premium for unlimited.',
+                    current: projectCount,
+                    limit: 5,
+                });
+            }
+        }
+    } catch (limitErr) {
+        console.warn('Failed to check tier limits:', limitErr);
+        // Continue without blocking on limit check
+    }
+
     if (!['feature', 'refactor', 'infrastructure', 'research', 'bugfix'].includes(projectType)) {
         return res.status(400).json({
             error: 'INVALID_TYPE',
@@ -101,6 +131,35 @@ router.post('/add-github', async (req: Request, res: Response) => {
         });
     }
 
+    // Check tier limits
+    try {
+        const userResult = await query('SELECT subscription_tier FROM users WHERE id = ?', [req.userId]) as any;
+        const userRows = userResult?.rows || userResult || [];
+        const user = Array.isArray(userRows) ? userRows[0] : userRows;
+        const tier = user?.subscription_tier || 'free';
+
+        if (tier === 'free') {
+            const projectsResult = await query(
+                'SELECT COUNT(*) as count FROM projects WHERE user_id = ?',
+                [req.userId]
+            ) as any;
+            const projectsRows = projectsResult?.rows || projectsResult || [];
+            const projectCount = Array.isArray(projectsRows) ? projectsRows[0]?.count : projectsRows?.count || 0;
+
+            if (projectCount >= 5) {
+                return res.status(403).json({
+                    error: 'LIMIT_EXCEEDED',
+                    message: 'Free tier limited to 5 projects. Upgrade to Premium for unlimited.',
+                    current: projectCount,
+                    limit: 5,
+                });
+            }
+        }
+    } catch (limitErr) {
+        console.warn('Failed to check tier limits:', limitErr);
+        // Continue without blocking on limit check
+    }
+
     try {
         // Extract owner and repo from URL
         const urlMatch = repoUrl.match(/github\.com\/([^/]+)\/([^/]+)/);
@@ -115,10 +174,11 @@ router.post('/add-github', async (req: Request, res: Response) => {
         const repoName = `${owner}/${repo}`;
 
         // Fetch repository metadata
+        const githubToken = getEnv('GITHUB_TOKEN', '');
         const octokit = axios.create({
             baseURL: 'https://api.github.com',
             headers: {
-                Authorization: `token ${process.env.GITHUB_TOKEN}`,
+                ...(githubToken ? { Authorization: `token ${githubToken}` } : {}),
                 Accept: 'application/vnd.github.v3+json',
             },
         });
@@ -188,6 +248,30 @@ router.post('/upload-csv', async (req: Request, res: Response) => {
                 error: 'INVALID_REQUEST',
                 message: 'CSV data is required',
             });
+        }
+
+        // Check tier limits for free users
+        const userResult = await query('SELECT subscription_tier FROM users WHERE id = ?', [req.userId]) as any;
+        const userRows = userResult?.rows || userResult || [];
+        const user = Array.isArray(userRows) ? userRows[0] : userRows;
+        const tier = user?.subscription_tier || 'free';
+
+        if (tier === 'free') {
+            const projectsResult = await query(
+                'SELECT COUNT(*) as count FROM projects WHERE user_id = ?',
+                [req.userId]
+            ) as any;
+            const projectsRows = projectsResult?.rows || projectsResult || [];
+            const projectCount = Array.isArray(projectsRows) ? projectsRows[0]?.count : projectsRows?.count || 0;
+
+            if (projectCount >= 5) {
+                return res.status(403).json({
+                    error: 'LIMIT_EXCEEDED',
+                    message: 'Free tier limited to 5 projects. Upgrade to Premium for unlimited.',
+                    current: projectCount,
+                    limit: 5,
+                });
+            }
         }
 
         const lines = csvData.trim().split('\n');
