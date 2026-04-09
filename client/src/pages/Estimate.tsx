@@ -8,6 +8,7 @@ export default function Estimate() {
     const { isPremium } = useAuth();
     const { addToast } = useToast();
     const navigate = useNavigate();
+    const apiURL = import.meta.env.VITE_API_URL || '';
     const [form, setForm] = useState({
         projectType: 'feature',
         estimatedLOC: '',
@@ -57,7 +58,7 @@ export default function Estimate() {
         setErrors({});
         setLoading(true);
         try {
-            const res = await axios.post('/api/estimate', {
+            const res = await axios.post(`${apiURL}/api/estimate`, {
                 ...form,
                 estimatedLOC: Number(form.estimatedLOC),
                 teamSize: Number(form.teamSize),

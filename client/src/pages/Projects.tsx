@@ -16,6 +16,7 @@ interface Project {
 
 export default function Projects() {
     const { isPremium } = useAuth();
+    const apiURL = import.meta.env.VITE_API_URL || '';
     const [tab, setTab] = useState<'github' | 'csv' | 'manual'>('github');
     const [projects, setProjects] = useState<Project[]>([]);
     const [loading, setLoading] = useState(true);
@@ -31,7 +32,7 @@ export default function Projects() {
 
     const fetchProjects = async () => {
         try {
-            const res = await axios.get('/api/projects');
+            const res = await axios.get(`${apiURL}/api/projects`);
             setProjects(res.data.projects);
             setStats({ total: res.data.total, limit: res.data.limit });
         } catch (err) {
@@ -51,7 +52,7 @@ export default function Projects() {
         setSubmitting(true);
         setError(''); setSuccess('');
         try {
-            await axios.post('/api/projects/add-manual', {
+            await axios.post(`${apiURL}/api/projects/add-manual`, {
                 projectName: manual.name,
                 projectType: manual.type,
                 estimatedLOC: Number(manual.loc),
@@ -71,7 +72,7 @@ export default function Projects() {
         setSubmitting(true);
         setError(''); setSuccess('');
         try {
-            const res = await axios.post('/api/projects/add-github', { repoUrl });
+            const res = await axios.post(`${apiURL}/api/projects/add-github`, { repoUrl });
             setSuccess(`Successfully imported ${res.data.inserted} projects from ${res.data.repo}`);
             setRepoUrl('');
             fetchProjects();
@@ -87,7 +88,7 @@ export default function Projects() {
         setError(''); setSuccess('');
         try {
             const csvData = await file.text();
-            const res = await axios.post('/api/projects/upload-csv', { csvData });
+            const res = await axios.post(`${apiURL}/api/projects/upload-csv`, { csvData });
             setSuccess(`Imported ${res.data.inserted} projects (${res.data.skipped} skipped)`);
             fetchProjects();
         } catch (err: any) {
@@ -101,7 +102,7 @@ export default function Projects() {
     const handleDelete = async (id: number) => {
         if (!confirm('Are you sure you want to delete this project?')) return;
         try {
-            await axios.delete(`/api/projects/${id}`);
+            await axios.delete(`${apiURL}/api/projects/${id}`);
             setProjects(projects.filter(p => p.id !== id));
             setStats(prev => ({ ...prev, total: prev.total - 1 }));
             setSuccess('Project deleted successfully');
@@ -113,7 +114,7 @@ export default function Projects() {
 
     const toggleShare = async (id: number, current: boolean) => {
         try {
-            await axios.patch(`/api/projects/${id}/share`, { isShared: !current });
+            await axios.patch(`${apiURL}/api/projects/${id}/share`, { isShared: !current });
             setProjects(projects.map(p => p.id === id ? { ...p, is_shared: !current } : p));
         } catch (err) {
             console.error('Share toggle failed:', err);

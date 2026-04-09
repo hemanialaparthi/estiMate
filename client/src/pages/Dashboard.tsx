@@ -21,6 +21,7 @@ export default function Dashboard() {
     const { user, isPremium } = useAuth();
     const { addToast } = useToast();
     const navigate = useNavigate();
+    const apiURL = import.meta.env.VITE_API_URL || '';
     const [stats, setStats] = useState<Stats | null>(null);
     const [history, setHistory] = useState<HistoryItem[]>([]);
     const [loading, setLoading] = useState(true);
@@ -29,8 +30,8 @@ export default function Dashboard() {
         const loadData = async () => {
             try {
                 const [projectsRes, historyRes] = await Promise.all([
-                    axios.get('/api/projects').catch(() => ({ data: { total: 0, limit: 10 } })),
-                    axios.get('/api/estimate/history').catch(() => ({ data: [] })),
+                    axios.get(`${apiURL}/api/projects`).catch(() => ({ data: { total: 0, limit: 10 } })),
+                    axios.get(`${apiURL}/api/estimate/history`).catch(() => ({ data: [] })),
                 ]);
                 
                 setStats({ 

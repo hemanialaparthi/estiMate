@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 
 export default function Settings() {
     const { isPremium, refreshUser } = useAuth();
+    const apiURL = import.meta.env.VITE_API_URL || '';
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState({ text: '', type: '' });
 
@@ -11,7 +12,7 @@ export default function Settings() {
         setLoading(true);
         const newTier = isPremium ? 'free' : 'premium';
         try {
-            const res = await axios.patch('/api/settings/subscription', { tier: newTier });
+            const res = await axios.patch(`${apiURL}/api/settings/subscription`, { tier: newTier });
             // Update local storage and context
             localStorage.setItem('em_token', res.data.token);
             axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
@@ -26,7 +27,7 @@ export default function Settings() {
 
     const handleExport = async () => {
         try {
-            const res = await axios.get('/api/settings/export');
+            const res = await axios.get(`${apiURL}/api/settings/export`);
             const blob = new Blob([JSON.stringify(res.data, null, 2)], { type: 'application/json' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');

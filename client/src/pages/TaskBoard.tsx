@@ -32,6 +32,7 @@ interface Board {
 export default function TaskBoard() {
     // const { } = useAuth();
     const location = useLocation();
+    const apiURL = import.meta.env.VITE_API_URL || '';
     const routeState = location.state as { autoGenerate?: boolean; projectId?: number } | null;
     const [projects, setProjects] = useState<Project[]>([]);
     const [loading, setLoading] = useState(true);
@@ -54,7 +55,7 @@ export default function TaskBoard() {
 
     const fetchProjects = async () => {
         try {
-            const res = await axios.get('/api/projects');
+            const res = await axios.get(`${apiURL}/api/projects`);
             setProjects(res.data.projects);
         } catch (_) {
             setError('Failed to load projects');
@@ -68,7 +69,7 @@ export default function TaskBoard() {
         setSelecting(String(projectId));
         setError('');
         try {
-            const res = await axios.post('/api/tasks/generate', { projectId });
+            const res = await axios.post(`${apiURL}/api/tasks/generate`, { projectId });
             setBoard(res.data);
             setSelecting('');
         } catch (err: any) {

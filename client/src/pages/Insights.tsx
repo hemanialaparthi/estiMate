@@ -7,12 +7,13 @@ import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Responsive
 export default function Insights() {
     const { isPremium } = useAuth();
     const navigate = useNavigate();
+    const apiURL = import.meta.env.VITE_API_URL || '';
     const [data, setData] = useState<any>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (isPremium) {
-            axios.get('/api/insights')
+            axios.get(`${apiURL}/api/insights`)
                 .then(res => setData(res.data))
                 .catch(() => { })
                 .finally(() => setLoading(false));
