@@ -83,7 +83,7 @@ export default function TaskBoard() {
         if (!board) return;
 
         try {
-            await axios.patch(`/api/tasks/task/${taskId}`, { status: newStatus, assignedTo });
+            await axios.patch(`${apiURL}/api/tasks/task/${taskId}`, { status: newStatus, assignedTo });
 
             // Update local board
             const updatedTasks = board.tasks.map(t =>
@@ -98,7 +98,7 @@ export default function TaskBoard() {
     const exportCSV = async () => {
         if (!board) return;
         try {
-            const res = await axios.get(`/api/tasks/export/${board.boardId}/csv`, {
+            const res = await axios.get(`${apiURL}/api/tasks/export/${board.boardId}/csv`, {
                 responseType: 'blob'
             });
             const url = window.URL.createObjectURL(new Blob([res.data]));
@@ -116,7 +116,7 @@ export default function TaskBoard() {
     const generateShareLink = async () => {
         if (!board) return;
         try {
-            const res = await axios.post(`/api/tasks/share/${board.boardId}`);
+            const res = await axios.post(`${apiURL}/api/tasks/share/${board.boardId}`);
             const shareUrl = res.data.shareUrl;
             alert(`Share this link:\n\n${shareUrl}`);
             navigator.clipboard.writeText(shareUrl);
