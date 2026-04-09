@@ -21,7 +21,7 @@ export default function Dashboard() {
     const { user, isPremium } = useAuth();
     const { addToast } = useToast();
     const navigate = useNavigate();
-    const apiURL = import.meta.env.VITE_API_URL || 'https://estimate-api-vgw1.onrender.com';
+    const apiURL = 'https://estimate-api-vgw1.onrender.com';
     const [stats, setStats] = useState<Stats | null>(null);
     const [history, setHistory] = useState<HistoryItem[]>([]);
     const [loading, setLoading] = useState(true);

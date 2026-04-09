@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 
 export default function Settings() {
     const { isPremium, refreshUser } = useAuth();
-    const apiURL = import.meta.env.VITE_API_URL || 'https://estimate-api-vgw1.onrender.com';
+    const apiURL = 'https://estimate-api-vgw1.onrender.com';
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState({ text: '', type: '' });
 

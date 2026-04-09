@@ -16,7 +16,7 @@ interface Project {
 
 export default function Projects() {
     const { isPremium } = useAuth();
-    const apiURL = import.meta.env.VITE_API_URL || 'https://estimate-api-vgw1.onrender.com';
+    const apiURL = 'https://estimate-api-vgw1.onrender.com';
     const [tab, setTab] = useState<'github' | 'csv' | 'manual'>('github');
     const [projects, setProjects] = useState<Project[]>([]);
     const [loading, setLoading] = useState(true);
