@@ -57,13 +57,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     const login = async (email: string, password: string) => {
-        const apiURL = import.meta.env.VITE_API_URL || '';
+        const apiURL = 'https://estimate-api-vgw1.onrender.com';
         const res = await axios.post(`${apiURL}/api/auth/login`, { email, password });
         saveAuth(res.data.token, res.data.user);
     };
 
     const register = async (email: string, password: string) => {
-        const apiURL = import.meta.env.VITE_API_URL || '';
+        const apiURL = 'https://estimate-api-vgw1.onrender.com';
         const res = await axios.post(`${apiURL}/api/auth/register`, { email, password });
         saveAuth(res.data.token, res.data.user);
     };
@@ -78,7 +78,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const refreshUser = async () => {
         try {
-            const res = await axios.get('/api/settings');
+            const apiURL = 'https://estimate-api-vgw1.onrender.com';
+            const res = await axios.get(`${apiURL}/api/settings`);
             const updated = { id: res.data.id, email: res.data.email, tier: res.data.subscription_tier };
             setUser(updated);
             localStorage.setItem('em_user', JSON.stringify(updated));
