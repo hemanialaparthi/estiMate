@@ -89,7 +89,7 @@ export default function Estimate() {
         setCreatingBoard(true);
         try {
             const projectName = `${form.projectType} estimate (${new Date().toLocaleDateString()})`;
-            const response = await axios.post('/api/projects/add-manual', {
+            const response = await axios.post(`${apiURL}/api/projects/add-manual`, {
                 projectName,
                 projectType: form.projectType,
                 estimatedLOC: Number(form.estimatedLOC),
