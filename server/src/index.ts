@@ -9,7 +9,7 @@ import settingsRouter from './routes/settings.js';
 import analyzeRouter from './routes/analyze.js';
 import tasksRouter from './routes/tasks.js';
 
-console.log('🔧 Initializing estiMATE server...');
+console.log('🔧 Initializing estiMate server...');
 
 dotenv.config();
 

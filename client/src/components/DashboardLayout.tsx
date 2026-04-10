@@ -24,7 +24,7 @@ export default function DashboardLayout() {
         <div className="app-shell">
             {/* Sidebar */}
             <aside className="app-sidebar">
-                <div className="app-logo">estiMATE</div>
+                <div className="app-logo">estiMate</div>
 
                 <nav className="app-nav">
                     {menuItems.map((item) => (
