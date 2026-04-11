@@ -51,7 +51,24 @@
 
 html {
     scroll-behavior: smooth;
-    font-size: 20px;
+    font-size: 15px; /* mobile base */
+}
+
+/* Scale font up progressively — mobile-first so order doesn't matter */
+@media (min-width: 481px) {
+    html { font-size: 16px; }
+}
+
+@media (min-width: 601px) {
+    html { font-size: 17px; }
+}
+
+@media (min-width: 769px) {
+    html { font-size: 18px; }
+}
+
+@media (min-width: 1024px) {
+    html { font-size: 20px; }
 }
 
 body {
@@ -1086,9 +1103,6 @@ a:hover {
 }
 
 @media (max-width: 768px) {
-    html {
-        font-size: 16px;
-    }
 
     h1 {
         font-size: clamp(1.8rem, 4vw, 2.5rem);
@@ -1189,9 +1203,6 @@ a:hover {
 }
 
 @media (max-width: 480px) {
-    html {
-        font-size: 14px;
-    }
 
     .card {
         padding: 16px;
@@ -1312,9 +1323,6 @@ a:hover {
 }
 
 @media (max-width: 600px) {
-    html {
-        font-size: 15px;
-    }
 
     h1 {
         font-size: clamp(1.5rem, 5vw, 2.2rem);
