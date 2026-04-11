@@ -133,6 +133,22 @@ async function findSimilarProjects(
     }
 }
 
+async function countUserImportedProjects(userId: number): Promise<number> {
+    try {
+        const result = await query(
+            `SELECT COUNT(*) as c FROM projects
+             WHERE user_id = ? AND source IN ('csv', 'manual', 'github')`,
+            [userId]
+        );
+        const rows = ((result as any)?.rows as any[]) || [];
+        const row = rows[0];
+        const n = row?.c ?? row?.count;
+        return typeof n === 'number' ? n : parseInt(String(n || 0), 10) || 0;
+    } catch {
+        return 0;
+    }
+}
+
 // POST /api/estimate - Calculate project estimate
 router.post('/', async (req: Request, res: Response) => {
     const { projectType, estimatedLOC, deadline, teamSize } = req.body as EstimateRequest;
@@ -201,15 +217,18 @@ router.post('/', async (req: Request, res: Response) => {
 
         // Get similar projects for confidence
         const similar = await findSimilarProjects(req.userId!, projectType, estimatedLOC);
+        const userTotalProjects = await countUserImportedProjects(req.userId!);
 
-        // Calculate confidence based on similar projects
+        // Comparable = same type + LOC within ±20% (crowd + your imports)
         const totalSimilar = similar.crowdCount + similar.userProjectCount;
-        let confidence = 'Low';
-        if (totalSimilar >= 5) confidence = 'High';
-        else if (totalSimilar >= 2) confidence = 'Medium';
 
-        // Confidence as percentage
-        const confidenceScore = totalSimilar >= 5 ? 85 : totalSimilar >= 2 ? 60 : 40;
+        // Confidence: one strong comparable project should not stay at "low" (40%).
+        // Scale: none → 40%, 1 comparable → 60%, 2–4 → 70%, 5+ → 85%
+        let confidenceScore = 40;
+        if (totalSimilar >= 5) confidenceScore = 85;
+        else if (totalSimilar >= 2) confidenceScore = 70;
+        else if (totalSimilar >= 1) confidenceScore = 60;
+        else if (userTotalProjects >= 1) confidenceScore = 45;
 
         // Estimate people needed
         let peopleNeeded = teamSize;
@@ -255,6 +274,7 @@ router.post('/', async (req: Request, res: Response) => {
             avgCycleTime: velocity.avgCycleTime,
             crowdCount: similar.crowdCount,
             userProjectCount: similar.userProjectCount,
+            userTotalProjects,
             crowdSamples: similar.crowdSamples,
             userProjects: similar.userProjects,
             peopleForDeadline: peopleNeeded,

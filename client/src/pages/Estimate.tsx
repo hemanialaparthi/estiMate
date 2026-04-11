@@ -332,10 +332,17 @@ export default function Estimate() {
                             {/* Data Sources */}
                             <div className="card">
                                 <h4 style={{ fontSize: '0.85rem', marginBottom: 16 }}>DATA SOURCES ANALYZED</h4>
+                                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: 8, lineHeight: 1.4 }}>
+                                    Confidence uses projects with the <strong>same type</strong> and <strong>similar size</strong> (±20% LOC). Imported project days/people appear below when they match.
+                                </p>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                        <span style={{ fontSize: '0.9rem' }}>Your History</span>
-                                        <span className="badge badge-purple">{result.userProjectCount || 0} projects</span>
+                                        <span style={{ fontSize: '0.9rem' }}>Imported projects (all)</span>
+                                        <span className="badge badge-purple">{result.userTotalProjects ?? result.userProjectCount ?? 0}</span>
+                                    </div>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <span style={{ fontSize: '0.9rem' }}>Comparable to this estimate</span>
+                                        <span className="badge badge-blue">{result.userProjectCount || 0}</span>
                                     </div>
                                     {isPremium && (
                                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -348,14 +355,18 @@ export default function Estimate() {
                                 <div className="divider" />
 
                                 <h4 style={{ fontSize: '0.85rem', marginBottom: 12 }}>SIMILAR REFERENCE PROJECTS</h4>
-                                {((isPremium ? result.crowdSamples : [])?.concat(result.userProjects || []))?.slice(0, 3).map((p: any, i: number) => (
+                                {((isPremium ? result.crowdSamples : [])?.concat(result.userProjects || []))?.slice(0, 3).map((p: any, i: number) => {
+                                    const days = p.actual_days ?? p.days;
+                                    const people = p.actual_people ?? p.people;
+                                    return (
                                     <div key={i} style={{ padding: '10px 0', borderBottom: i < 2 ? '1px solid var(--border)' : 'none', fontSize: '0.85rem' }}>
                                         <div style={{ fontWeight: 600, color: 'var(--text-primary)', marginBottom: 2 }}>{p.name}</div>
                                         <div style={{ color: 'var(--text-muted)' }}>
-                                            {p.loc.toLocaleString()} LOC · {p.days} days · {p.people} people
+                                            {Number(p.loc).toLocaleString()} LOC · {days != null ? `${days} days` : '—'} · {people != null ? `${people} people` : '—'}
                                         </div>
                                     </div>
-                                ))}
+                                    );
+                                })}
                             </div>
                         </div>
                     )}

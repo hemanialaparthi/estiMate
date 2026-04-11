@@ -6,8 +6,10 @@ Payment Integration,feature,3500,22,3
 Database Migration,refactor,4000,24,3
 API Rate Limiting,infrastructure,2000,14,2
 Security Audit,research,3000,25,3
+API Rate Limiting for CoTrace,infrastructure,2000,14,2
 Critical Bug Fix,bugfix,500,4,2
 Email Service,feature,2500,16,2
 Search Engine,feature,6000,40,5
 Two Factor Auth,feature,1500,10,2
 Mobile App Port,feature,8000,50,6
+Login System for CoTrace,feature,1200,8,2
